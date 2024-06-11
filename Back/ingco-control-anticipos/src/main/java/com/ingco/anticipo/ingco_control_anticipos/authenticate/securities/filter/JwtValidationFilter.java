@@ -1,9 +1,6 @@
-package com.ingco.anticipo.ingco_control_anticipos.security.filter;
+package com.ingco.anticipo.ingco_control_anticipos.authenticate.securities.filter;
 
-import static com.practica.crud.practicacrudrest.security.TokenJwtConfig.CONTENT_TYPE;
-import static com.practica.crud.practicacrudrest.security.TokenJwtConfig.HEADER_AUTHORIZATION;
-import static com.practica.crud.practicacrudrest.security.TokenJwtConfig.PREFIX_TOKEN;
-import static com.practica.crud.practicacrudrest.security.TokenJwtConfig.SECRET_KEY;
+
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -28,6 +25,8 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+
+import static com.ingco.anticipo.ingco_control_anticipos.authenticate.securities.TokenJwtConfig.*;
 
 public class JwtValidationFilter extends BasicAuthenticationFilter {
 

@@ -1,4 +1,4 @@
-package com.ingco.anticipo.ingco_control_anticipos.security.filter;
+package com.ingco.anticipo.ingco_control_anticipos.authenticate.securities.filter;
 
 import java.io.IOException;
 import java.util.Collection;
@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.ingco.anticipo.ingco_control_anticipos.authenticate.entities.User;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -17,7 +18,6 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import com.fasterxml.jackson.core.exc.StreamReadException;
 import com.fasterxml.jackson.databind.DatabindException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.practica.crud.practicacrudrest.Entities.User;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -26,7 +26,8 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-import static com.practica.crud.practicacrudrest.security.TokenJwtConfig.*;
+import static com.ingco.anticipo.ingco_control_anticipos.authenticate.securities.TokenJwtConfig.*;
+
 
 public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
@@ -45,8 +46,8 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
         try {
             user = new ObjectMapper().readValue(request.getInputStream(), User.class);
-            username = user.getUserName();
-            password = user.getPassword();
+            username = user.getEmail();
+            password = user.getPasswd();
         } catch (StreamReadException e) {
             e.printStackTrace();
         } catch (DatabindException e) {
@@ -66,16 +67,16 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
         org.springframework.security.core.userdetails.User user = (org.springframework.security.core.userdetails.User) authResult
                 .getPrincipal();
-        String username = user.getUsername();
+        String name = user.getUsername();
         Collection<? extends GrantedAuthority> roles = authResult.getAuthorities();
 
         Claims claims = Jwts.claims()
                 .add("authorities", new ObjectMapper().writeValueAsString(roles))
-                .add("username", username)
+                .add("username", name)
                 .build();
 
         String token = Jwts.builder()
-                .subject(username)
+                .subject(name)
                 .claims(claims)
                 .expiration(new Date(System.currentTimeMillis() + 3600000))
                 .issuedAt(new Date())
@@ -86,8 +87,8 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
         Map<String, String> body = new HashMap<>();
         body.put("token", token);
-        body.put("username", username);
-        body.put("message", String.format("Hola %s has iniciado sesion con exito!", username));
+        body.put("username", name);
+        body.put("message", String.format("Hola %s has iniciado sesion con exito!", name));
 
         response.getWriter().write(new ObjectMapper().writeValueAsString(body));
         response.setContentType(CONTENT_TYPE);

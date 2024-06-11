@@ -8,10 +8,10 @@ import java.lang.annotation.Target;
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
 
-@Constraint(validatedBy = ExistByUsernameValidation.class)
+@Constraint(validatedBy = ExistByEmailValidation.class)
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface ExistByUsername {
+public @interface ExistByEmail {
     String message() default "no valido!, Use otro por favor!";
 
     Class<?>[] groups() default {};

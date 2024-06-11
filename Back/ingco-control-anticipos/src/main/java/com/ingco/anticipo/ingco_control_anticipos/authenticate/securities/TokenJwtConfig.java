@@ -1,4 +1,4 @@
-package com.ingco.anticipo.ingco_control_anticipos.security;
+package com.ingco.anticipo.ingco_control_anticipos.authenticate.securities;
 
 import javax.crypto.SecretKey;
 

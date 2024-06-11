@@ -1,8 +1,9 @@
-package com.practica.crud.practicacrudrest.services;
+package com.ingco.anticipo.ingco_control_anticipos.authenticate.services;
+
+import com.ingco.anticipo.ingco_control_anticipos.authenticate.entities.User;
 
 import java.util.List;
 
-import com.practica.crud.practicacrudrest.Entities.User;
 
 public interface UserService {
 
@@ -10,5 +11,5 @@ public interface UserService {
 
     User save(User user);
 
-    boolean existsByUserName(String username);
+    boolean existsByEmail(String username);
 }

@@ -1,18 +1,18 @@
-package com.practica.crud.practicacrudrest.services;
+package com.ingco.anticipo.ingco_control_anticipos.authenticate.services;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import com.ingco.anticipo.ingco_control_anticipos.authenticate.entities.Rol;
+import com.ingco.anticipo.ingco_control_anticipos.authenticate.entities.User;
+import com.ingco.anticipo.ingco_control_anticipos.authenticate.repositories.RolRepository;
+import com.ingco.anticipo.ingco_control_anticipos.authenticate.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.practica.crud.practicacrudrest.Entities.Rol;
-import com.practica.crud.practicacrudrest.Entities.User;
-import com.practica.crud.practicacrudrest.repositories.RolRepository;
-import com.practica.crud.practicacrudrest.repositories.UserRepository;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -35,21 +35,21 @@ public class UserServiceImpl implements UserService {
     public User save(User user) {
 
         Optional<Rol> optionalRolUser = rolRepository.findByName("ROLE_USER");
-        List<Rol> roles = new ArrayList<>();
+        //List<Rol> roles = new ArrayList<>();
 
         optionalRolUser.ifPresent(roles::add);
         if (user.isAdmin()) {
             Optional<Rol> optionalRolAdmin = rolRepository.findByName("ROLE_ADMIN");
             optionalRolAdmin.ifPresent(roles::add);
         }
-        user.setRoles(roles);
+        // .setRoles(roles); cuando se implemente rol en User
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         return userRepository.save(user);
     }
 
     @Override
-    public boolean existsByUserName(String username) {
-        return userRepository.existsByUserName(username);
+    public boolean existsByEmail(String email) {
+        return userRepository.existsByEmail(email);
     }
 
 }

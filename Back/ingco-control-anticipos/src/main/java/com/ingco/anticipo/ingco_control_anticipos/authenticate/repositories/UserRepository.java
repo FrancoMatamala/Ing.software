@@ -1,12 +1,12 @@
-package com.practica.crud.practicacrudrest.repositories;
+package com.ingco.anticipo.ingco_control_anticipos.authenticate.repositories;
 
+import com.ingco.anticipo.ingco_control_anticipos.authenticate.entities.User;
 import org.springframework.data.repository.CrudRepository;
 
-import com.practica.crud.practicacrudrest.Entities.User;
 import java.util.Optional;
 
 public interface UserRepository extends CrudRepository<User, Long> {
-    boolean existsByUserName(String username);
+    boolean existByEmail(String email);
 
-    Optional<User> findByUserName(String userName);
+    Optional<User> findByEmail(String email);
 }

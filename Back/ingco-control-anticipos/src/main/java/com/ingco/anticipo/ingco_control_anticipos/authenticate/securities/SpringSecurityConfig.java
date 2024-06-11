@@ -1,7 +1,9 @@
-package com.ingco.anticipo.ingco_control_anticipos.security;
+package com.ingco.anticipo.ingco_control_anticipos.authenticate.securities;
 
 import java.util.Arrays;
 
+import com.ingco.anticipo.ingco_control_anticipos.authenticate.securities.filter.JWTAuthenticationFilter;
+import com.ingco.anticipo.ingco_control_anticipos.authenticate.securities.filter.JwtValidationFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
@@ -20,8 +22,6 @@ import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 
-import com.practica.crud.practicacrudrest.security.filter.JWTAuthenticationFilter;
-import com.practica.crud.practicacrudrest.security.filter.JwtValidationFilter;
 
 @Configuration
 public class SpringSecurityConfig {

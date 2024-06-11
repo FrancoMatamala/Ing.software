@@ -1,10 +1,9 @@
-package com.practica.crud.practicacrudrest.repositories;
+package com.ingco.anticipo.ingco_control_anticipos.authenticate.repositories;
 
 import java.util.Optional;
 
+import com.ingco.anticipo.ingco_control_anticipos.authenticate.entities.Rol;
 import org.springframework.data.repository.CrudRepository;
-
-import com.practica.crud.practicacrudrest.Entities.Rol;
 
 public interface RolRepository extends CrudRepository<Rol, Long> {
 

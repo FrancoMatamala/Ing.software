@@ -1,4 +1,4 @@
-package com.ingco.anticipo.ingco_control_anticipos.security.filter;
+package com.ingco.anticipo.ingco_control_anticipos.authenticate.securities.filter;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
