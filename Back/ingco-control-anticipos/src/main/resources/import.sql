@@ -1,0 +1,1 @@
+INSERT INTO public.role (name) VALUES ('ROLE_COLLABORATOR'), ('ROLE_ADMIN'), ('ROLE_BOSS');

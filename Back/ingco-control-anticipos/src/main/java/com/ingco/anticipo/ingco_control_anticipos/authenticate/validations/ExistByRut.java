@@ -8,11 +8,11 @@ import java.lang.annotation.Target;
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
 
-@Constraint(validatedBy = ExistByEmailValidation.class)
+@Constraint(validatedBy = ExistByRutValidation.class)
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface ExistByEmail {
-    String message() default "no valido!, Use otro por favor!";
+public @interface ExistByRut {
+    String message() default "Ya existe!, Use otro por favor!, o Ingrese a la plataforma!";
 
     Class<?>[] groups() default {};
 

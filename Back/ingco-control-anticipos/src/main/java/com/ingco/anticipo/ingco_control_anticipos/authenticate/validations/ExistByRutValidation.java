@@ -8,17 +8,17 @@ import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 
 @Component
-public class ExistByEmailValidation implements ConstraintValidator<ExistByEmail, String> {
+public class ExistByRutValidation implements ConstraintValidator<ExistByRut, String> {
 
     @Autowired
     private UserService userService;
 
     @Override
-    public boolean isValid(String email, ConstraintValidatorContext context) {
+    public boolean isValid(String rut, ConstraintValidatorContext context) {
         if (userService == null) {
             return true;
         }
-        return !userService.existsByEmail(email);
+        return !userService.existByEmail(rut);
     }
 
 }

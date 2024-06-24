@@ -1,12 +1,11 @@
 package com.ingco.anticipo.ingco_control_anticipos.authenticate.services;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import com.ingco.anticipo.ingco_control_anticipos.authenticate.entities.Rol;
+import com.ingco.anticipo.ingco_control_anticipos.authenticate.entities.Role;
 import com.ingco.anticipo.ingco_control_anticipos.authenticate.entities.User;
-import com.ingco.anticipo.ingco_control_anticipos.authenticate.repositories.RolRepository;
+import com.ingco.anticipo.ingco_control_anticipos.authenticate.repositories.RoleRepository;
 import com.ingco.anticipo.ingco_control_anticipos.authenticate.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -20,7 +19,7 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserRepository userRepository;
     @Autowired
-    private RolRepository rolRepository;
+    private RoleRepository rolRepository;
     @Autowired
     private PasswordEncoder passwordEncoder;
 
@@ -34,22 +33,26 @@ public class UserServiceImpl implements UserService {
     @Override
     public User save(User user) {
 
-        Optional<Rol> optionalRolUser = rolRepository.findByName("ROLE_USER");
-        //List<Rol> roles = new ArrayList<>();
-
-        optionalRolUser.ifPresent(roles::add);
+        Optional<Role> optionalRole = rolRepository.findByName("ROLE_COLLABORATOR");
         if (user.isAdmin()) {
-            Optional<Rol> optionalRolAdmin = rolRepository.findByName("ROLE_ADMIN");
-            optionalRolAdmin.ifPresent(roles::add);
+            optionalRole = rolRepository.findByName("ROLE_ADMIN");
+        } else if (user.isBoss()) {
+            optionalRole = rolRepository.findByName("ROLE_BOSS");
         }
-        // .setRoles(roles); cuando se implemente rol en User
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        if (optionalRole.isPresent()) {
+            user.setRol(optionalRole.get());
+        } else {
+            throw new RuntimeException("El rol especificado no fue encontrado");
+        }
+
+        user.setPasswd(passwordEncoder.encode(user.getPasswd()));
         return userRepository.save(user);
     }
 
+    @Transactional(readOnly = true)
     @Override
-    public boolean existsByEmail(String email) {
-        return userRepository.existsByEmail(email);
+    public boolean existByEmail(String rut) {
+        return userRepository.existsByRut(rut);
     }
 
 }

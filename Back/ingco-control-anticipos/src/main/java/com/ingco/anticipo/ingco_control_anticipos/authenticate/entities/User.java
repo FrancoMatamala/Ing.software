@@ -1,14 +1,16 @@
 package com.ingco.anticipo.ingco_control_anticipos.authenticate.entities;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.ingco.anticipo.ingco_control_anticipos.authenticate.validations.ExistByEmail;
+import com.ingco.anticipo.ingco_control_anticipos.authenticate.validations.ExistByRut;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.*;
 
 @Entity
 @Table(name = "usuario")
-@Data @AllArgsConstructor @NoArgsConstructor
+@Getter @Setter
+@AllArgsConstructor @NoArgsConstructor
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,11 +24,12 @@ public class User {
     @Column(name = "apellido")
     private String lastName;
 
-    @ExistByEmail
     @NotEmpty
+    @Email
     @Column(name = "correo_electronico")
     private String email;
 
+    @ExistByRut
     @NotEmpty
     @Column(name ="rut", unique = true)
     private String rut;
@@ -40,12 +43,38 @@ public class User {
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private boolean enabled;
 
+    @ManyToOne(cascade = CascadeType.ALL)
+    private Role rol;
+
     @Transient
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private boolean admin;
 
+    @Transient
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private boolean boss;
+
+    @Transient
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private boolean collaborator;
+
     @PrePersist
     public void PrePersist() {
         enabled = true;
+    }
+
+    @Override
+    public String toString() {
+        return "{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", email='" + email + '\'' +
+                ", rut='" + rut + '\'' +
+                ", passwd='" + passwd + '\'' +
+                ", enabled=" + enabled +
+                ", rol=" + rol +
+                ", admin=" + admin +
+                '}';
     }
 }

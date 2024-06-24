@@ -1,0 +1,21 @@
+Antes de Runear la aplicacion se debe tener lo siguiente:
+    - Visual Studio Code
+    - Spring Boot (La extencion de visual studio code tiene que ser o de microsoft o vmware)
+    - Postgres 
+
+Se debe de Crear un Schema con el nombre de db_ingco_anticipos
+Configurar Application properties
+
+Configuraciones en src/main/resources/application.properties:
+spring.application.name=ingco-control-anticipos
+
+spring.datasource.url=jdbc:postgresql://localhost:5432/db_ingco_anticipos
+spring.datasource.username="Aca su Usuario de la BDD por defecto es postgres"
+spring.datasource.password="Aca su Contraseña de la BDD"
+spring.datasource.driver-class-name=org.postgresql.Driver
+spring.jpa.database-platform=org.hibernate.dialect.PostgresPlusDialect
+spring.jpa.show-sql=true
+spring.jpa.hibernate.ddl-auto=update
+logging.level.org.hibernate.SQL=debug
+
+sprig.jpa.properties.hibernate.jdbc.lob.non_contextual_creation=true
