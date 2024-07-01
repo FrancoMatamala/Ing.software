@@ -1,7 +1,6 @@
-package com.ingco.anticipo.ingco_control_anticipos.collaborator.dtos;
+package com.ingco.anticipo.ingco_control_anticipos.colaborator.dtos;
 
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
+import com.ingco.anticipo.ingco_control_anticipos.proyect.entities.Proyect;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,4 +11,5 @@ import lombok.Setter;
 public class ColaboratorDto {
     private int grossSalary;
     private String bossRut;
+    private Long proyectId;
 }

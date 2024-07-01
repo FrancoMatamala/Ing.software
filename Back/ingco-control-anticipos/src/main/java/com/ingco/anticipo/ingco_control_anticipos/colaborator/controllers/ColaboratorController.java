@@ -1,9 +1,8 @@
-package com.ingco.anticipo.ingco_control_anticipos.collaborator.controllers;
+package com.ingco.anticipo.ingco_control_anticipos.colaborator.controllers;
 
-import com.ingco.anticipo.ingco_control_anticipos.authenticate.entities.User;
-import com.ingco.anticipo.ingco_control_anticipos.collaborator.dtos.ColaboratorDto;
-import com.ingco.anticipo.ingco_control_anticipos.collaborator.entities.Colaborator;
-import com.ingco.anticipo.ingco_control_anticipos.collaborator.services.ColaboratorService;
+import com.ingco.anticipo.ingco_control_anticipos.colaborator.dtos.ColaboratorDto;
+import com.ingco.anticipo.ingco_control_anticipos.colaborator.entities.Colaborator;
+import com.ingco.anticipo.ingco_control_anticipos.colaborator.services.ColaboratorService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -56,7 +55,7 @@ public class ColaboratorController {
             if (colaboratorDto.getGrossSalary() <= 10000000 && colaboratorDto.getGrossSalary() > 100000) {
                 colaboratorDB.setGrossSalary(colaboratorDto.getGrossSalary());
             }
-            if (!(colaboratorDto.getBossRut() == null)) {
+            if (!colaboratorDto.getBossRut().isEmpty()) {
                 colaboratorDB.setBossRut(colaboratorDto.getBossRut());
             }
             return ResponseEntity.status(HttpStatus.CREATED).body(colaboratorService.save(colaboratorDB));

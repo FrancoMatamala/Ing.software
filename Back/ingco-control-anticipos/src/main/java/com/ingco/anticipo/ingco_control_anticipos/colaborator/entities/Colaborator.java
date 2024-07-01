@@ -1,8 +1,9 @@
-package com.ingco.anticipo.ingco_control_anticipos.collaborator.entities;
+package com.ingco.anticipo.ingco_control_anticipos.colaborator.entities;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.ingco.anticipo.ingco_control_anticipos.authenticate.entities.User;
+import com.ingco.anticipo.ingco_control_anticipos.proyect.entities.Proyect;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
@@ -46,9 +47,17 @@ public class Colaborator {
     @JoinColumn(name = "jefe_directo_id", nullable = false)
     private User direclyBoss;
 
+    @ManyToOne
+    @JoinColumn(name = "proyecto_id", nullable = false)
+    private Proyect proyect;
+
     @Transient
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String BossRut;
+
+    @Transient
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private Long proyectId;
 
     @PrePersist
     public void prePersist() {
