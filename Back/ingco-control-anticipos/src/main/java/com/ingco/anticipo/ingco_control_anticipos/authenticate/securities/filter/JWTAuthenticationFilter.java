@@ -70,9 +70,10 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                 .getPrincipal();
         String name = user.getUsername();
         Collection<? extends GrantedAuthority> roles = authResult.getAuthorities();
-
+        String role = roles.stream().findFirst().orElseThrow().getAuthority();
         Claims claims = Jwts.claims()
                 .add("authorities", new ObjectMapper().writeValueAsString(roles))
+                .add("role", role)
                 .add("username", name)
                 .build();
 
