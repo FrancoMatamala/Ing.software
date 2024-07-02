@@ -7,6 +7,7 @@ import com.ingco.anticipo.ingco_control_anticipos.proyect.entities.Proyect;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -26,7 +27,6 @@ public class Colaborator {
     private Long id;
 
     @OneToOne
-    @NotNull
     @JoinColumn(name = "id_usuario", nullable = false, unique = true)
     private User user;
 
@@ -36,6 +36,7 @@ public class Colaborator {
     @Column(name = "salario_bruto")
     private Integer grossSalary;
 
+    @Column(name = "estado_pago_adicional")
     private Boolean additionalPayment;
 
     @NotNull
@@ -52,10 +53,17 @@ public class Colaborator {
     private Proyect proyect;
 
     @Transient
+    @NotNull
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private Long idUser;
+
+    @Transient
+    @NotEmpty
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String BossRut;
 
     @Transient
+    @NotNull
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Long proyectId;
 

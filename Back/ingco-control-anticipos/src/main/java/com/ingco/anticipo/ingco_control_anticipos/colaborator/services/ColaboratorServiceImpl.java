@@ -43,7 +43,7 @@ public class ColaboratorServiceImpl implements ColaboratorService{
 
     @Override
     public Colaborator save(Colaborator colaborator) {
-        Optional<User> userOptional = userRepository.findById(colaborator.getUser().getId());
+        Optional<User> userOptional = userRepository.findById(colaborator.getIdUser());
         User user = userOptional.orElseThrow(() -> new IllegalArgumentException("El usuario no existe"));
 
         if (!user.getRol().getName().equals("ROLE_COLLABORATOR")) {

@@ -21,7 +21,7 @@ INSERT INTO usuario (nombre, apellido, correo_electronico, rut, contraseña, est
 ('Sofía', 'Hernández', 'sofia.hernandez@example.com', '66778899-3', '$2a$10$dWMuGcjOCUi82IfSiGBHkugBwoKrhteZwaC2tZtRKBcNLIijAnswi', true, (SELECT id FROM role WHERE name = 'ROLE_BOSS'));
 
 -- Inserción de colaboradores
-INSERT INTO colaboradores (id, id_usuario, salario_bruto, additional_payment, fecha_ingreso, jefe_directo_id, proyecto_id) VALUES
+INSERT INTO colaboradores (id, id_usuario, salario_bruto, estado_pago_adicional, fecha_ingreso, jefe_directo_id, proyecto_id) VALUES
 ((SELECT id FROM usuario WHERE rut = '12345678-9'), (SELECT id FROM usuario WHERE rut = '12345678-9'), 500000, true, '2020-01-15', (SELECT id FROM usuario WHERE rut = '11223344-5'), (SELECT id FROM proyectos WHERE nombre = 'Proyecto Mapa')),
 ((SELECT id FROM usuario WHERE rut = '98765432-1'), (SELECT id FROM usuario WHERE rut = '98765432-1'), 600000, true, '2018-05-20', (SELECT id FROM usuario WHERE rut = '66778899-3'), (SELECT id FROM proyectos WHERE nombre = 'Proyecto Alpha')),
 ((SELECT id FROM usuario WHERE rut = '55443322-6'), (SELECT id FROM usuario WHERE rut = '55443322-6'), 450000, true, '2019-09-10', (SELECT id FROM usuario WHERE rut = '11223344-5'), (SELECT id FROM proyectos WHERE nombre = 'Proyecto Beta')),
