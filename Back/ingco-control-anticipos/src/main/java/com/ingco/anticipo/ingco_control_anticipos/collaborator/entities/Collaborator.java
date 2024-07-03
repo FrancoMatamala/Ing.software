@@ -3,13 +3,9 @@ package com.ingco.anticipo.ingco_control_anticipos.collaborator.entities;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.ingco.anticipo.ingco_control_anticipos.authenticate.entities.User;
-import com.ingco.anticipo.ingco_control_anticipos.collaborator.validations.ExistById;
 import com.ingco.anticipo.ingco_control_anticipos.project.entities.Project;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Max;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -25,7 +21,6 @@ import java.util.Date;
 public class Collaborator {
 
     @Id
-    @ExistById
     private Long id;
 
     @OneToOne
@@ -60,7 +55,7 @@ public class Collaborator {
     private Long idUser;
 
     @Transient
-    @NotEmpty
+    @NotBlank
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String BossRut;
 
