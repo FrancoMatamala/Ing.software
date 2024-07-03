@@ -4,6 +4,8 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
+import com.ingco.anticipo.ingco_control_anticipos.authenticate.entities.User;
+import com.ingco.anticipo.ingco_control_anticipos.authenticate.repositories.UserRepository;
 import com.ingco.anticipo.ingco_control_anticipos.collaborator.entities.Collaborator;
 import com.ingco.anticipo.ingco_control_anticipos.collaborator.repositories.CollaboratorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +23,9 @@ public class AdvanceServiceImpl implements AdvanceService {
 
     @Autowired
     private CollaboratorRepository colaboratorRepository;
+
+    @Autowired
+    private UserRepository userRepository;
 
     @Transactional(readOnly = true)
     @Override
@@ -45,13 +50,15 @@ public class AdvanceServiceImpl implements AdvanceService {
         }
 
         advance.setDateEntry(java.sql.Date.valueOf(today));
-
-        Optional<Collaborator> colaboratorOptional = colaboratorRepository.findById(advance.getIdColaborator());
+        Optional<User> userOptional = userRepository.findByRut(advance.getRutCollaborador());
+        Optional<Collaborator> colaboratorOptional = colaboratorRepository.findById(userOptional
+                .orElseThrow(() -> new NullPointerException("El colaborador no existe"))
+                .getId());
         Collaborator colaborator = colaboratorOptional.orElseThrow(() -> new NullPointerException("El colaborador no existe"));
 
-        advance.setColaborator(colaborator);
+        advance.setCollaborator(colaborator);
 
-        int advanceCount = repository.countByColaboratorIdAndCurrentMonth(colaborator.getId());
+        int advanceCount = repository.countByRutCollaboratorAndCurrentMonth(colaborator.getUser().getRut());
         if (advanceCount >= 2) {
             throw new IllegalArgumentException("El colaborador excede la cantidad de anticipos solicitados en este mes.");
         }
@@ -69,6 +76,36 @@ public class AdvanceServiceImpl implements AdvanceService {
             throw new IllegalArgumentException("El monto solicitado excede el límite permitido.");
         }
 
+        advance.setEstado(Advance.Status.EN_ESPERA);
+
         return repository.save(advance);
+    }
+
+    @Override
+    public Advance update(Advance advance) {
+        advance.setRutCollaborador(advance.getCollaborator().getUser().getRut());
+        return repository.save(advance);
+    }
+
+
+    @Transactional(readOnly = true)
+    @Override
+    public List<Advance> findByIdCollaborator(Long ColaboratorId) {
+        return repository.findByRutCollaborator(ColaboratorId);
+    }
+    @Transactional(readOnly = true)
+    @Override
+    public List<Advance> findByIdCollaboratorAndCurrentMonth(Long ColaboratorId) {
+        return repository.findByRutCollaboratorAndCurrentMonth(ColaboratorId);
+    }
+    @Transactional(readOnly = true)
+    @Override
+    public List<Advance> findByDirectlyBossId(Long bossId) {
+        return repository.findByDirectlyBossId(bossId);
+    }
+    @Transactional(readOnly = true)
+    @Override
+    public List<Advance> findByDirectlyBossIdAndCurrentMonth(Long id) {
+        return repository.findByDirectlyBossIdAndCurrentMonth(id);
     }
 }

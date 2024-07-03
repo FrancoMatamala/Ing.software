@@ -13,4 +13,13 @@ public interface AdvanceService {
 
     Advance save(Advance advance);
 
+    Advance update(Advance advance);
+
+    List<Advance> findByIdCollaborator(Long ColaboratorId);
+
+    List<Advance> findByIdCollaboratorAndCurrentMonth(Long ColaboratorId);
+
+    List<Advance> findByDirectlyBossId(Long bossId);
+
+    List<Advance> findByDirectlyBossIdAndCurrentMonth(Long id);
 }

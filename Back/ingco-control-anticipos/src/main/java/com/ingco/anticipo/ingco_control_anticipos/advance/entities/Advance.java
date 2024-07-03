@@ -26,7 +26,7 @@ public class Advance {
 
     @ManyToOne
     @JoinColumn(name = "colaborator_id", nullable = false)
-    private Collaborator colaborator;
+    private Collaborator collaborator;
 
 
     @Column(name = "fecha_ingreso", nullable = false)
@@ -37,14 +37,14 @@ public class Advance {
     @Column(name = "monto_solicitado")
     private Integer requestAdAmount;
 
-    @NotBlank
-    @Column(name = "motivo")
-    private String motive;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "estado", nullable = false)
+    private Status estado;
     
-    @NotNull
+    @NotBlank
     @Transient
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    private Long idColaborator;
+    private String rutCollaborador;
 
     @Override
     public String toString() {
@@ -52,7 +52,11 @@ public class Advance {
                 "id=" + id +
                 ", fechaIngreso=" + dateEntry +
                 ", montoSolicitado=" + requestAdAmount +
-                ", motivo='" + motive + '\'' +
                 '}';
+    }
+    public enum Status {
+        EN_ESPERA,
+        ACEPTADO,
+        RECHAZADO
     }
 }

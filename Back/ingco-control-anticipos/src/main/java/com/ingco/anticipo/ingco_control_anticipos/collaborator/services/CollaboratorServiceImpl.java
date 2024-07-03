@@ -32,6 +32,11 @@ public class CollaboratorServiceImpl implements CollaboratorService {
     }
 
     @Override
+    public List<Collaborator> listByBossId(Long bossId) {
+        return colaboratorRepository.findByBossId(bossId);
+    }
+
+    @Override
     public Optional<Collaborator> getColaboratorById(Long id) {
         return colaboratorRepository.findById(id);
     }
@@ -57,11 +62,11 @@ public class CollaboratorServiceImpl implements CollaboratorService {
         if (!boss.getRol().getName().equals("ROLE_BOSS")) {
             throw new IllegalArgumentException("El usuario debe tener el rol de Jefe");
         }
-        collaborator.setDireclyBoss(boss);
+        collaborator.setDirectlyBoss(boss);
 
         Optional<Project> proyectOptional = proyectRepository.findById(collaborator.getProyectId());
         Project proyect = proyectOptional.orElseThrow(() -> new NullPointerException("El proyecto no existe"));
-        collaborator.setProyect(proyect);
+        collaborator.setProject(proyect);
 
         Date dateEntry = collaborator.getDateEntry();
         Calendar calendar = Calendar.getInstance();

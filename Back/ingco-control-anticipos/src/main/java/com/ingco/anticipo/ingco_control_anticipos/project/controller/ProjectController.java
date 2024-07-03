@@ -31,7 +31,7 @@ public class ProjectController {
         if (projectOptional.isPresent()){
             return ResponseEntity.ok(projectOptional.orElseThrow());
         }
-        return ResponseEntity.notFound().build();
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No se encontro el proyecto o no existe en el sistema");
     }
 
     @PostMapping
@@ -55,7 +55,7 @@ public class ProjectController {
             }
             return ResponseEntity.status(HttpStatus.CREATED).body(projectService.save(proyectDB));
         }
-        return ResponseEntity.notFound().build();
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No se encontro el proyecto o no existe en el sistema");
     }
 
     @DeleteMapping("/{id}")
@@ -65,6 +65,6 @@ public class ProjectController {
             projectService.delete(id);
             return ResponseEntity.noContent().build();
         }
-        return ResponseEntity.notFound().build();
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No se encontro el proyecto o no existe en el sistema");
     }
 }

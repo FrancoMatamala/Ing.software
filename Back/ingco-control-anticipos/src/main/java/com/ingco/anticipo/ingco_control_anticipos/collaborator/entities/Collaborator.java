@@ -48,11 +48,11 @@ public class Collaborator {
 
     @ManyToOne
     @JoinColumn(name = "jefe_directo_id", nullable = false)
-    private User direclyBoss;
+    private User directlyBoss;
 
     @ManyToOne
     @JoinColumn(name = "proyecto_id", nullable = false)
-    private Project proyect;
+    private Project project;
 
     @Transient
     @NotNull
